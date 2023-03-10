@@ -16,7 +16,7 @@ def setup_intents():
     intents = discord.Intents.default()
     # intents.presences = True
     # intents.members = True
-    # intents.message_content = True
+    intents.message_content = True
     return intents
 
 bot = commands.Bot(command_prefix=config.COMMAND_PREFIX, intents=setup_intents(), owner_id=config.OWNER_ID)
