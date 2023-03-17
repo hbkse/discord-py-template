@@ -52,8 +52,7 @@ class MyBot(commands.Bot):
         await self.process_commands(message)
 
     async def _run(self):
-        async with self:
-            for ext in extensions:
-                await self.load_extension(ext)
-                log.info('Loaded extension: %s', ext)
-            await self.start(config.DISCORD_BOT_TOKEN)
+        for ext in extensions:
+            await self.load_extension(ext)
+            log.info('Loaded extension: %s', ext)
+        await self.start(config.DISCORD_BOT_TOKEN)
