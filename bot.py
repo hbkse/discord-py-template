@@ -6,8 +6,7 @@ import config
 log = logging.getLogger(__name__)
 
 extensions = [
-    'cogs.misc',
-    'jishaku'
+    'cogs.misc'
 ]
 
 def setup_intents():
@@ -19,7 +18,7 @@ def setup_intents():
 
 class MyBot(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=config.COMMAND_PREFIX, owner_ids=[config.OWNER_ID], intents=setup_intents())
+        super().__init__(command_prefix=config.COMMAND_PREFIX, owner_id=config.OWNER_ID, intents=setup_intents())
 
     async def on_ready(self):
         log.info('Logged in as: %s', self.user)
