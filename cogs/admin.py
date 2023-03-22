@@ -89,5 +89,5 @@ class Admin(commands.Cog):
         commands = await self.bot.tree.sync(guild=None)
         await ctx.send(f'Successfully synced {len(commands)} commands')
 
-async def setup(bot):
+async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(Admin(bot))
