@@ -1,12 +1,13 @@
 from discord.ext import commands
 import discord
-import logging.config
+import logging
 import config
+from aiohttp import ClientSession
 
-log = logging.getLogger(__name__)
+log: logging.Logger = logging.getLogger(__name__)
 
 extensions = [
-    'cogs.misc'
+    'cogs.admin'
 ]
 
 def setup_intents():
@@ -17,10 +18,15 @@ def setup_intents():
     return intents
 
 class MyBot(commands.Bot):
-    def __init__(self):
-        super().__init__(command_prefix=config.COMMAND_PREFIX, owner_id=config.OWNER_ID, intents=setup_intents())
+    def __init__(self, http_client: ClientSession):
+        super().__init__(
+            command_prefix=config.COMMAND_PREFIX, 
+            owner_id=config.OWNER_ID, 
+            intents=setup_intents()
+        )
+        self.http_client = http_client
 
-    async def on_ready(self):
+    async def on_ready(self) -> None:
         log.info('Logged in as: %s', self.user)
         log.info('Discord.py version: %s', discord.__version__)
 
@@ -51,8 +57,14 @@ class MyBot(commands.Bot):
             return
         await self.process_commands(message)
 
-    async def _run(self):
+    async def setup_hook(self) -> None:
         for ext in extensions:
             await self.load_extension(ext)
             log.info('Loaded extension: %s', ext)
+        # sync commands
+
+        # This would also be a good place to connect to our database and
+        # load anything that should be in memory prior to handling events.
+
+    async def _run(self) -> None:
         await self.start(config.DISCORD_BOT_TOKEN)
