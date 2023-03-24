@@ -1,5 +1,9 @@
 FROM python:3.8-slim
 
+# If deploying on Railway, environment variables are set from the secrets UI
+# and are injected in during build.
+# ARG DISCORD_BOT_TOKEN
+
 WORKDIR /opt/app
 
 COPY requirements.txt ./

@@ -6,13 +6,6 @@ on:
     # - 'master'
 
 env:
-  # Application secrets
-  DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
-  OWNER_ID: ${{ secrets.OWNER_ID }}
-  TESTING_GUILD_ID: ${{ secrets.TESTING_GUILD_ID }}
-  COMMIT_HASH: ${{ vars.GITHUB_SHA }}
-
-  # Deployment secrets
   RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
 jobs:
