@@ -1,0 +1,36 @@
+name: Build and Deploy to Railway (railway.app)
+
+on:
+  push:
+    branches:
+    # - 'master'
+
+env:
+  # Application secrets
+  DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+  OWNER_ID: ${{ secrets.OWNER_ID }}
+  TESTING_GUILD_ID: ${{ secrets.TESTING_GUILD_ID }}
+  COMMIT_HASH: ${{ vars.GITHUB_SHA }}
+
+  # Deployment secrets
+  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+jobs:
+  deploy:
+    name: Deploy to Railway
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Setup Railway CLI
+    - name: Set up Railway CLI
+      run: curl -fsSL cli.new | sh
+
+    - name: Deploy
+      run: railway up
+      env: 
+        RAILWAY_TOKEN: $RAILWAY_TOKEN
+        # This should be infered, but let's add it anyways
+        RAILWAY_DOCKERFILE_PATH: Dockerfile

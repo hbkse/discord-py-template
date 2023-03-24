@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import logging
 import subprocess
+import config
 
 from typing import Optional
 
@@ -21,7 +22,8 @@ class Admin(commands.Cog):
     async def debug(self, ctx: commands.Context):
         message = [
             f'Logged in as: {self.bot.user}',
-            f'Discord.py version: {discord.__version__}'
+            f'Discord.py version: {discord.__version__}',
+            f'Commit Hash: {config.COMMIT_HASH}'
         ]
         log.info("Debug command used.")
 
